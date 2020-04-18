@@ -31,23 +31,17 @@
 (use-package org
   :ensure org-plus-contrib)
 
-(setq org-confirm-babel-evaluate t) ; Maybe?...
+;; (setq org-confirm-babel-evaluate t) ; Maybe?...
 
-(use-package ob-go)
-(use-package ob-prolog)
-(use-package ess) ;; package for languages such as Julia, R
-(org-babel-do-load-languages 'org-babel-load-languages
-                             '((lisp   . t)
-                               (go     . t)
-                               (shell  . t)
-                               (dot    . t)
-                               (js     . t)
-                               (julia  . t)
-                               (C      . t)
-                               (scheme . t)
-                               (shen   . t)
-                               (prolog . t)
-                               (python . t)))
+;; (org-babel-do-load-languages 'org-babel-load-languages
+;;                              '((lisp   . t)
+;;                                (shell  . t)
+;;                                (dot    . t)
+;;                                (js     . t)
+;;                                (C      . t)
+;;                                (scheme . t)
+;;                                (shen   . t)
+;;                                (python . t)))
 
 (mapc (lambda (x)
         (add-to-list 'org-babel-tangle-lang-exts x))
