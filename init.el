@@ -31,18 +31,6 @@
 (use-package org
   :ensure org-plus-contrib)
 
-;; (setq org-confirm-babel-evaluate t) ; Maybe?...
-
-;; (org-babel-do-load-languages 'org-babel-load-languages
-;;                              '((lisp   . t)
-;;                                (shell  . t)
-;;                                (dot    . t)
-;;                                (js     . t)
-;;                                (C      . t)
-;;                                (scheme . t)
-;;                                (shen   . t)
-;;                                (python . t)))
-
 (mapc (lambda (x)
         (add-to-list 'org-babel-tangle-lang-exts x))
       '(("js"      . "js")
@@ -103,7 +91,6 @@
 (use-package gnu-apl-mode)
 (use-package dyalog-mode)
 (use-package forth-mode)
-(use-package futhark-mode)
 (use-package go-mode)
 (use-package julia-mode)
 (use-package lean-mode)
