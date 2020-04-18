@@ -39,6 +39,7 @@
 (use-package htmlize
   :config (setq htmlize-output-type 'css))
 
+(setq org-confirm-babel-evaluate nil)
 
 ;;; Org + LaTeX
 (require 'ox-latex)
