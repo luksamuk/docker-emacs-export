@@ -1,0 +1,5 @@
+#+TITLE: emacs-export
+#+AUTHOR: Lucas S. Vieira
+
+Emacs on Alpine Linux with export configurations for HTML.
+Based on [[https://github.com/iquiw/docker-alpine-emacs][docker-alpine-emacs]]
