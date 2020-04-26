@@ -39,6 +39,8 @@
 (use-package htmlize
   :config (setq htmlize-output-type 'css))
 
+(setq org-html-html5-fancy t)
+
 (setq org-confirm-babel-evaluate nil)
 
 ;;; Org + LaTeX
@@ -138,13 +140,4 @@
             (add-to-list 'auto-mode-alist '("\\.js\\'" . rjsx-mode))
             (add-to-list 'auto-mode-alist '("\\.jsx\\'" . rjsx-mode))))
 (use-package dockerfile-mode)
-
-
-;;; Blog stuff
-(setq org-html-preamble-format
-      '(("en" "<h1 class=\"title\">%t</h1>" "<p><i>Written in %d by %a<br/>%e</i></p>")
-        ("pt_BR" "<h1 class=\"title\">%t</h1><p><i>Escrito em %d por %a<br/>%e</i></p>"))
-      org-html-postamble-format
-      '(("en" "<h3><a href=\"../\">Back to last page</a></h3>")
-        ("pt_BR" "<h3><a href=\"../\">De volta à página anterior</a></h3>")))
 
