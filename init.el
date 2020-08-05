@@ -75,10 +75,7 @@
 
 ;;; Org-reveal
 (use-package ox-reveal
-  :config (setq org-reveal-root
-                "https://cdn.jsdelivr.net/npm/reveal.js@3.9.2/js/reveal.min.js"
-                org-reveal-root
-                "http://cdn.jsdelivr.net/reveal.js@3.9.2/"
+  :config (setq org-reveal-root    "http://cdn.jsdelivr.net/reveal.js"
                 org-reveal-mathjax t))
 
 
