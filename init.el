@@ -148,9 +148,4 @@
                                (dot    . t)
                                (js     . t)
                                (C      . t)
-                               (scheme . t)
-                               (sml . t)
-                               (prolog . t)
-                               (python . t)
-                               (ein    . t)))
-
+                               (scheme . t)))
