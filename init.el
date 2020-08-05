@@ -144,14 +144,11 @@
 ;;; Org-babel
 (org-babel-do-load-languages 'org-babel-load-languages
                              '((lisp   . t)
-                               (go     . t)
                                (shell  . t)
                                (dot    . t)
                                (js     . t)
-                               (julia  . t)
                                (C      . t)
                                (scheme . t)
-                               (shen   . t)
                                (sml . t)
                                (prolog . t)
                                (python . t)
