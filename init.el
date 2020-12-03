@@ -114,7 +114,8 @@
                   emacs-lisp-mode-hook
                   scheme-mode-hook
                   shen-mode-hook
-                  clojure-mode-hook)))
+                  clojure-mode-hook
+                  majestic-mode-hook)))
 
 (mapc (lambda (hook)
         (add-hook hook #'(lambda () (setq indent-tabs-mode nil))))
@@ -122,7 +123,8 @@
         emacs-lisp-mode-hook
         scheme-mode-hook
         shen-mode-hook
-        clojure-mode-hook))
+        clojure-mode-hook
+        majestic-mode-hook))
 
 (use-package unison-mode)
 (use-package python-mode)
