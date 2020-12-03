@@ -18,6 +18,13 @@
 (require 'use-package)
 (setq use-package-always-ensure t)
 
+;; el-get
+(use-package el-get
+  :config (progn
+            (remove-hook 'el-get-post-install-hooks
+                         'el-get-post-install-notification)
+            (remove-hook 'el-get-post-remove-hooks
+                         'el-get-post-remove-notification)))
 
 ;;; Theming
 (use-package kaolin-themes
@@ -97,6 +104,9 @@
 (use-package racket-mode)
 (use-package shen-mode)
 (use-package clojure-mode)
+
+(el-get-bundle luksamuk/majestic-mode)
+(require 'majestic-mode)
 
 (use-package rainbow-delimiters
   :config (mapc (lambda (hook) (add-hook hook #'rainbow-delimiters-mode))
