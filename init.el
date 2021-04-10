@@ -104,6 +104,7 @@
 (use-package racket-mode)
 (use-package shen-mode)
 (use-package clojure-mode)
+(use-package rc-mode)
 
 (el-get-bundle luksamuk/majestic-mode)
 (require 'majestic-mode)
