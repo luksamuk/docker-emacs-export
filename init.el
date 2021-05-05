@@ -33,6 +33,10 @@
 (use-package highlight-numbers
   :config (add-hook 'prog-mode-hook 'highlight-numbers-mode))
 
+;;; General config
+(setq tab-width 4
+      inhibit-startup-screen t
+      inhibit-splash-screen t)
 
 ;;; Org config
 (use-package org
