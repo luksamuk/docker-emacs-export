@@ -42,10 +42,6 @@
 (use-package org
   :ensure org-plus-contrib)
 
-;; Required by org-ref for some reason
-;;(use-package pdf-tools
-;;  :config (progn (pdf-tools-install)))
-
 (mapc (lambda (x)
         (add-to-list 'org-babel-tangle-lang-exts x))
       '(("js"      . "js")
@@ -95,9 +91,11 @@
 
 
 ;;; Org-ref
+(use-package pdf-tools
+  :config (pdf-tools-install t))
 (use-package org-ref
-  :config (progn ;;(require 'org-ref-pdf)
-                 (require 'org-ref-bibtex)
+  :config (progn (require 'org-ref-pdf)
+		 (require 'org-ref-bibtex)
                  (require 'org-ref-url-utils)))
 (org-ref-define-citation-link "citeonline" ?o)
 
