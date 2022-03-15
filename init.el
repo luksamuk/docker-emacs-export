@@ -4,8 +4,7 @@
 
 (setq package-archives
       '(("gnu" . "http://elpa.gnu.org/packages/")
-        ("melpa" . "https://melpa.org/packages/")
-        ("org" . "https://orgmode.org/elpa/")))
+        ("melpa" . "https://melpa.org/packages/")))
 
 (package-initialize)
 
@@ -40,7 +39,7 @@
 
 ;;; Org config
 (use-package org
-  :ensure org-plus-contrib)
+  :ensure org-contrib)
 
 (mapc (lambda (x)
         (add-to-list 'org-babel-tangle-lang-exts x))
