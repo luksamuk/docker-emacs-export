@@ -97,7 +97,7 @@
   :config (progn (require 'org-ref-pdf)
 		 (require 'org-ref-bibtex)
                  (require 'org-ref-url-utils)))
-(org-ref-define-citation-link "citeonline" ?o)
+;;(org-ref-define-citation-link "citeonline" ?o)
 
 
 ;;; Languages
