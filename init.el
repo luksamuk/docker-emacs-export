@@ -42,6 +42,10 @@
 (use-package org
   :ensure org-plus-contrib)
 
+;; Required by org-ref for some reason
+(use-package pdf-tools
+  :config (progn (pdf-tools-install)))
+
 (mapc (lambda (x)
         (add-to-list 'org-babel-tangle-lang-exts x))
       '(("js"      . "js")
