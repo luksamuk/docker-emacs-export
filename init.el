@@ -97,7 +97,13 @@
   :config (progn (require 'org-ref-pdf)
 		 (require 'org-ref-bibtex)
                  (require 'org-ref-url-utils)))
+
 ;;(org-ref-define-citation-link "citeonline" ?o)
+(defconst org-ref-abntex-types
+  '("citeonline" "Cite without parens (abnTeX2)"))
+(add-to-list 'org-ref-cite-types org-ref-abntex-types)
+
+(require 'ox-bibtex)
 
 
 ;;; Languages
