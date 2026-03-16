@@ -15,16 +15,11 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
+;; Add custom scripts
+(add-to-list 'load-path "/root/.emacs.d/lisp/")
+
 (require 'use-package)
 (setq use-package-always-ensure t)
-
-;; el-get
-(use-package el-get
-  :config (progn
-            (remove-hook 'el-get-post-install-hooks
-                         'el-get-post-install-notification)
-            (remove-hook 'el-get-post-remove-hooks
-                         'el-get-post-remove-notification)))
 
 ;;; Theming
 (use-package kaolin-themes
@@ -118,7 +113,7 @@
 (use-package clojure-mode)
 (use-package rc-mode)
 
-(el-get-bundle luksamuk/majestic-mode)
+;; Majestic Mode is copied directly from repo
 (require 'majestic-mode)
 
 (use-package rainbow-delimiters

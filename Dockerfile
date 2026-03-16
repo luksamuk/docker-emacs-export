@@ -17,6 +17,12 @@ RUN git clone https://github.com/backtracking/bibtex2html && \
     ./configure && \
     make
 
+FROM alpine AS majestic-lisp
+WORKDIR /
+RUN apk update &&\
+    apk --no-cache add git
+RUN git clone https://github.com/luksamuk/majestic-mode
+
 FROM alpine-emacs
 RUN apk --no-cache add graphviz ttf-freefont git rsync \
     build-base g++ gcc automake autoconf libpng-dev \
@@ -24,6 +30,7 @@ RUN apk --no-cache add graphviz ttf-freefont git rsync \
 COPY --from=bibtex2html /bibtex2html/bibtex2html /usr/bin/bibtex2html
 COPY --from=bibtex2html /bibtex2html/bib2bib /usr/bin/bib2bib
 COPY init.el /root/.emacs.d/
+COPY --from=majestic-lisp /majestic-mode/majestic-mode.el /root/.emacs.d/lisp/
 RUN emacs --batch --kill -l /root/.emacs.d/init.el
 RUN mkdir -p /github/home && ln -s /root/.emacs.d /github/home/
 ENTRYPOINT ["/entrypoint.sh"]
