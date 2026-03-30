@@ -84,10 +84,9 @@
 
 
 ;;; Org-reveal - ESSENTIAL for presentations
-(when (package-installed-p 'ox-reveal)
-  (require 'ox-reveal)
-  (setq org-reveal-root "https://cdn.jsdelivr.net/npm/reveal.js"
-        org-reveal-mathjax t))
+(require 'ox-reveal nil t)
+(setq org-reveal-root "https://cdn.jsdelivr.net/npm/reveal.js"
+      org-reveal-mathjax t)
 
 
 ;;; Languages - for syntax highlighting in code blocks
