@@ -1,4 +1,5 @@
-;;; Packages
+;;; Packages - Optimized for blog export
+;;; Only essential packages for HTML/Reveal export
 
 (require 'package)
 
@@ -7,26 +8,28 @@
 	("nongnu" . "https://elpa.nongnu.org/nongnu/")
         ("melpa" . "https://melpa.org/packages/")))
 
+;; Initialize packages (already installed in Docker image)
 (package-initialize)
-
-
-;;; Install use-package
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
+(package-activate-all)
 
 ;; Add custom scripts
 (add-to-list 'load-path "/root/.emacs.d/lisp/")
 
+;; Use use-package but don't auto-install (packages pre-installed in image)
 (require 'use-package)
-(setq use-package-always-ensure t)
+(setq use-package-always-ensure nil)
 
-;;; Theming
-(use-package kaolin-themes
-  :config (load-theme 'kaolin-aurora t))
+;;; Theming - ESSENTIAL for code highlighting in HTML
+(when (package-installed-p 'kaolin-themes)
+  (load-theme 'kaolin-aurora t))
 
-(use-package highlight-numbers
-  :config (add-hook 'prog-mode-hook 'highlight-numbers-mode))
+;;; HTML export - ESSENTIAL
+(when (package-installed-p 'htmlize)
+  (require 'htmlize)
+  (setq htmlize-output-type 'css))
+
+(when (package-installed-p 'highlight-numbers)
+  (add-hook 'prog-mode-hook 'highlight-numbers-mode))
 
 ;;; General config
 (setq tab-width 4
@@ -34,19 +37,17 @@
       inhibit-splash-screen t)
 
 ;;; Org config
-(use-package org
-  :ensure org-contrib)
+(when (package-installed-p 'org-contrib)
+  (require 'org-contrib))
 
-(mapc (lambda (x)
-        (add-to-list 'org-babel-tangle-lang-exts x))
-      '(("js"      . "js")
-        ("gnu-apl" . "apl")))
-
-(use-package htmlize
-  :config (setq htmlize-output-type 'css))
+;; Org-babel languages
+(with-eval-after-load 'org
+  (mapc (lambda (x)
+          (add-to-list 'org-babel-tangle-lang-exts x))
+        '(("js"      . "js")
+          ("gnu-apl" . "apl"))))
 
 (setq org-html-html5-fancy t)
-
 (setq org-confirm-babel-evaluate nil)
 
 ;;; Org + LaTeX
@@ -79,84 +80,68 @@
              '("mathletters" "ucs" nil))
 
 
-;;; Org-reveal
-(use-package ox-reveal
-  :config (setq org-reveal-root    "https://cdn.jsdelivr.net/npm/reveal.js"
-                org-reveal-mathjax t))
+;;; Org-reveal - ESSENTIAL for presentations
+(when (package-installed-p 'ox-reveal)
+  (require 'ox-reveal)
+  (setq org-reveal-root "https://cdn.jsdelivr.net/npm/reveal.js"
+        org-reveal-mathjax t))
 
 
-;;; Org-ref
-(use-package pdf-tools
-  :config (pdf-tools-install t))
-(use-package org-ref
-  :config (progn (require 'org-ref-pdf)
-		 (require 'org-ref-bibtex)
-                 (require 'org-ref-url-utils)))
+;;; Languages - for syntax highlighting in code blocks
+(when (package-installed-p 'gnu-apl-mode) (require 'gnu-apl-mode))
+(when (package-installed-p 'dyalog-mode) (require 'dyalog-mode))
+(when (package-installed-p 'forth-mode) (require 'forth-mode))
+(when (package-installed-p 'go-mode) (require 'go-mode))
+(when (package-installed-p 'julia-mode) (require 'julia-mode))
+(when (package-installed-p 'racket-mode) (require 'racket-mode))
+(when (package-installed-p 'clojure-mode) (require 'clojure-mode))
+(when (package-installed-p 'rc-mode) (require 'rc-mode))
 
-;;(org-ref-define-citation-link "citeonline" ?o)
-(defconst org-ref-abntex-types
-  '("citeonline" "Cite without parens (abnTeX2)"))
-(add-to-list 'org-ref-cite-types org-ref-abntex-types)
-
-(require 'ox-bibtex)
-
-
-;;; Languages
-(use-package gnu-apl-mode)
-(use-package dyalog-mode)
-(use-package forth-mode)
-(use-package go-mode)
-(use-package julia-mode)
-(use-package lean-mode)
-(use-package racket-mode)
-(use-package shen-mode)
-(use-package clojure-mode)
-(use-package rc-mode)
-
-;; Majestic Mode is copied directly from repo
+;; Majestic Mode - for custom syntax
 (require 'majestic-mode)
 
-(use-package rainbow-delimiters
-  :config (mapc (lambda (hook) (add-hook hook #'rainbow-delimiters-mode))
-                '(lisp-mode-hook
-                  emacs-lisp-mode-hook
-                  scheme-mode-hook
-                  shen-mode-hook
-                  clojure-mode-hook
-                  majestic-mode-hook)))
+(when (package-installed-p 'rainbow-delimiters)
+  (mapc (lambda (hook) (add-hook hook #'rainbow-delimiters-mode))
+        '(lisp-mode-hook
+          emacs-lisp-mode-hook
+          scheme-mode-hook
+          clojure-mode-hook
+          majestic-mode-hook)))
 
 (mapc (lambda (hook)
         (add-hook hook #'(lambda () (setq indent-tabs-mode nil))))
       '(lisp-mode-hook
         emacs-lisp-mode-hook
         scheme-mode-hook
-        shen-mode-hook
         clojure-mode-hook
         majestic-mode-hook))
 
-(use-package unison-mode)
-(use-package python-mode)
-(use-package purescript-mode)
-(use-package reason-mode)
-(use-package rust-mode)
+(when (package-installed-p 'unison-mode) (require 'unison-mode))
+(when (package-installed-p 'python-mode) (require 'python-mode))
+(when (package-installed-p 'purescript-mode) (require 'purescript-mode))
+(when (package-installed-p 'reason-mode) (require 'reason-mode))
+(when (package-installed-p 'rust-mode) (require 'rust-mode))
 
-(use-package web-mode
-  :init (progn
-          (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
-          (add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
-          (add-to-list 'auto-mode-alist '("\\.[agj]sp\\'" . web-mode))
-          (add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
-          (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
-          (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
-          (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
-          (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))))
-(use-package json-mode)
-(use-package js2-mode)
-(use-package rjsx-mode
-  :config (progn
-            (add-to-list 'auto-mode-alist '("\\.js\\'" . rjsx-mode))
-            (add-to-list 'auto-mode-alist '("\\.jsx\\'" . rjsx-mode))))
-(use-package dockerfile-mode)
+(when (package-installed-p 'web-mode)
+  (require 'web-mode)
+  (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.[agj]sp\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode)))
+
+(when (package-installed-p 'json-mode) (require 'json-mode))
+(when (package-installed-p 'js2-mode) (require 'js2-mode))
+
+(when (package-installed-p 'rjsx-mode)
+  (require 'rjsx-mode)
+  (add-to-list 'auto-mode-alist '("\\.js\\'" . rjsx-mode))
+  (add-to-list 'auto-mode-alist '("\\.jsx\\'" . rjsx-mode)))
+
+(when (package-installed-p 'dockerfile-mode) (require 'dockerfile-mode))
 
 ;;; Org-babel
 (org-babel-do-load-languages 'org-babel-load-languages
