@@ -20,13 +20,16 @@
 (setq use-package-always-ensure nil)
 
 ;;; Theming - ESSENTIAL for code highlighting in HTML
+;; Theme must be loaded BEFORE htmlize for proper fontification
 (when (package-installed-p 'kaolin-themes)
+  (require 'kaolin-themes nil t)
   (load-theme 'kaolin-aurora t))
 
-;;; HTML export - ESSENTIAL
-(when (package-installed-p 'htmlize)
-  (require 'htmlize)
-  (setq htmlize-output-type 'css))
+;;; HTML export - ESSENTIAL for code highlighting
+;; htmlize MUST be loaded before org-html export
+(require 'htmlize nil t)
+(setq org-html-htmlize-output-type 'css)
+(setq org-html-htmlize-fontify-native-code t)
 
 (when (package-installed-p 'highlight-numbers)
   (add-hook 'prog-mode-hook 'highlight-numbers-mode))
